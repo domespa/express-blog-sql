@@ -1,0 +1,25 @@
+{
+  "name": "express-blog-routing",
+  "version": "1.0.0",
+  "description": "Blog Ricette",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "watch": "node --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/domespa/express-blog-api-crud.git"
+  },
+  "author": "Domenico Spampinato",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/domespa/express-blog-api-crud/issues"
+  },
+  "homepage": "https://github.com/domespa/express-blog-api-crud#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}
