@@ -2,19 +2,24 @@ const connection = require("../data/db");
 const postsData = require("../data/postsData");
 
 // Index
-const index = (req, res) => {
-  let postsFiltered = postsData;
-  const { tag } = req.query;
-  if (tag) {
-    postsFiltered = postsFiltered.filter((post) => post.tags.includes(tag));
-  }
-  res.json(postsFiltered);
-};
+function index(req, res) {
+  const sql = `SELECT * FROM posts`;
+  connection.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ error: "Database query failed" });
+    res.json(results);
+  });
+}
 
 // Show
 function show(req, res) {
   const id = req.params.id;
-  const sql = "SELECT * FROM posts WHERE id = ?";
+  const sql = `
+      SELECT posts.title , tags.label 
+      FROM tags 
+      JOIN post_tag ON tags.id = post_tag.tag_id
+      JOIN posts ON post_tag.post_id = posts.id 
+      WHERE posts.id = ?
+      `;
   connection.query(sql, [id], (err, results) => {
     if (err) return res.status(500).json({ error: "Database query failed" });
     if (results.length === 0)
