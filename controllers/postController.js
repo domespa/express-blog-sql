@@ -83,20 +83,13 @@ const modify = (req, res) => {
 };
 
 // Delete
-const destroy = (req, res) => {
+function destroy(req, res) {
   const { id } = req.params;
 
-  const post = postsData.findIndex((elm) => elm.id == id);
-
-  if (post < 0) {
-    return res.status(404).json({
-      error: "Post not found",
-    });
-  }
-  postsData.splice(post, 1);
-  res.json({
-    message: `Article has been deleted (RIP)`,
+  connection.query("DELETE FROM posts WHERE id = ?", [id], (err) => {
+    if (err) return res.status(500).json({ error: "Failed to delete posts" });
+    res.sendStatus(204);
   });
-};
+}
 
 module.exports = { index, show, store, update, modify, destroy };
